@@ -5,17 +5,19 @@ description:         Fetches a user timeline from Twitter, and optionally linkif
 homepage:            https://github.com/stackbuilders/twitter-feed
 license:             MIT
 license-file:        LICENSE
-author:              Justin Leitgeb, Andres Torres
+author:              Justin Leitgeb, Andrés Torres
 maintainer:          justin@stackbuilders.com
 category:            Web
 build-type:          Simple
 extra-source-files:
 cabal-version:       >=1.10
 
+source-repository head
+  type:            git
+  location:        https://github.com/stackbuilders/twitter-feed.git
+
 library
   exposed-modules:     Web.Twitter.Feed
-  -- other-modules:
-  -- other-extensions:
   build-depends:         base >=4.6 && <4.7
                        , json
                        , authenticate-oauth
