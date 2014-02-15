@@ -43,7 +43,11 @@ Your response will be an `IO Either String [SimpleTweet]`.
 Contributions are welcome to this library. Fork, modify, make sure the tests
 pass, and open a PR.
 
+## LICENSE
+
+MIT, see the LICENSE file in this repo.
+
 ## Authors
 
-Justin Leitgeb [@justinleitgeb][http://twitter.com/justinleitgeb] and
-Andres Torres
+Justin Leitgeb [@justinleitgeb](http://twitter.com/justinleitgeb) and
+Andrés Torres.
