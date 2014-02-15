@@ -49,5 +49,6 @@ MIT, see the LICENSE file in this repo.
 
 ## Authors
 
-Justin Leitgeb [@justinleitgeb](http://twitter.com/justinleitgeb) and
+Justin Leitgeb ([Twitter: @justinleitgeb](http://twitter.com/justinleitgeb),
+[Github: @jsl](https://github.com/jsl)) and
 Andrés Torres.
