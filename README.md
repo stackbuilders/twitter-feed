@@ -5,7 +5,7 @@ API. It retrieves the timeline with entities, and links the usernames and links
 found in the feed.
 
 It is currently used to retrieve the Twitter feed that is displayed on our
-web site, <www.stackbuilders.com>.
+web site, <http://www.stackbuilders.com>.
 
 ## Usage
 
