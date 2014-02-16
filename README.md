@@ -1,5 +1,7 @@
 # Twitter Feed
 
+[![Build Status](https://travis-ci.org/stackbuilders/twitter-feed.png)](https://travis-ci.org/stackbuilders/twitter-feed)
+
 This package is used for retrieving a users' timeline via the Twitter timeline
 API. It retrieves the timeline with entities, and links the usernames and links
 found in the feed.
