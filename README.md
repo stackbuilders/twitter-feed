@@ -3,15 +3,15 @@
 [![Build Status](https://travis-ci.org/stackbuilders/twitter-feed.png)](https://travis-ci.org/stackbuilders/twitter-feed)
 
 This package is used for retrieving a users' timeline via the Twitter timeline
-API. It retrieves the timeline with entities, and links the usernames and links
-found in the feed.
+API (OAuth). It retrieves the timeline with entities, and links the usernames
+and links found in the feed.
 
 It is currently used to retrieve the Twitter feed that is displayed on our
 web site, <http://www.stackbuilders.com>.
 
 ## Usage
 
-You must pass your Oauth credentials to the client. Create them as follows:
+You must pass your OAuth credentials to the client. Create them as follows:
 
 ```haskell
 import Web.Authenticate.OAuth
