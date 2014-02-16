@@ -19,8 +19,9 @@ addLinkTest =
     addLink (Link 8 8 "not ") "this is a test" @?= "this is not a test"
 
 timelineUrlTest =
-    timelineUrl "someone" 3 @?= "https://api.twitter.com/1.1/statuses/\
-                                \user_timeline.json?screen_name=someone&count=3"
+    timelineUrl "someone" 3 True @?=
+                    "https://api.twitter.com/1.1/statuses/user_timeline.json\
+                    \?screen_name=someone&count=3&exclude_replies=true"
 
 sortLinkTest =
     sortLinks urlEntitiesExamples userEntitiesExamples mediaEntitiesExamples

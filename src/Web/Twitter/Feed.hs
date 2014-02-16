@@ -20,7 +20,7 @@ import GHC.Generics (Generic)
 import Control.Applicative
 import Data.List (sortBy)
 import Control.Monad (mzero)
-import Web.Authenticate.OAuth
+import Data.Char (toLower)
 
 type BoundingIndices = [Int]
 
@@ -107,10 +107,10 @@ instance FromJSON Entities
                                <*> v .:? "media" .!= []
         parseJSON _          = mzero
 
-timeline :: String -> OAuth -> Credential -> Int ->
+timeline :: OAuth -> Credential -> Int -> Bool -> String ->
             IO (Either String [SimpleTweet])
-timeline twitterUsername oauth credential tweets = do
-  req <- parseUrl $ timelineUrl twitterUsername tweets
+timeline oauth credential count excludeReplies username = do
+  req <- parseUrl $ timelineUrl username count excludeReplies
   res <- withManager $ \m -> do
            signedreq <- signOAuth oauth credential req
            httpLbs signedreq m
@@ -121,10 +121,11 @@ timeline twitterUsername oauth credential tweets = do
     Nothing -> return $ Left "Unable to retrieve tweets!"
     Just ts -> return $ Right $ map (simplifyTweet . linkifyTweet) ts
 
-timelineUrl :: String -> Int -> String
-timelineUrl user count =
+timelineUrl :: String -> Int -> Bool -> String
+timelineUrl user count excludeReplies =
     "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" ++
-    user ++ "&count=" ++ show count
+    user ++ "&count=" ++ show count ++ "&exclude_replies=" ++
+    (map toLower $ show excludeReplies)
 
 linkifyTweet :: Tweet -> Tweet
 linkifyTweet tweet = Tweet (processText (text tweet)
