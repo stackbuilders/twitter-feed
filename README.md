@@ -28,12 +28,17 @@ mycred = newCredential "your oauth token"
                        "your oauth token secret"
 ```
 
-Next, you can call the `timeline` function directly, along with the username
-for which you want to retrieve tweets, your oauth token and credentials,
-and the number of tweets you want to retrieve.
+Next, you can call the `timeline` function directly. The arguments to the
+timeline function are:
+
+1. OAuth token
+1. OAuth Credential
+1. Number of tweets to retrieve
+1. Whether to exclude replies in feed
+1. Username for which to retrieve tweets
 
 ```haskell
-λ: res <- timeline "stackbuilders" myoauth mycred 3
+λ: res <- timeline myoauth mycred 3 False "stackbuilders"
 λ: res
 Right [SimpleTweet {body = "Ven a nuestro evento de Stack U en Quito el 22 de febrero - Ruby y programaci\243n funcional <a target=\"_blank\" href=\"http://t.co/XHCbwvA8TI\">stackbuilders.com/news/ven-al-ev\8230</a>", tweetId = "434472043862433792"},SimpleTweet {body = "<a target=\"_blank\" href=\"//twitter.com/_eightb\">@_eightb</a> <a target=\"_blank\" href=\"//twitter.com/filipebarcos\">@filipebarcos</a> prove that we didn't use ghcjs! :)", tweetId = "431932790423420929"},SimpleTweet {body = "RT <a target=\"_blank\" href=\"//twitter.com/filipebarcos\">@filipebarcos</a>: w00t!! <a target=\"_blank\" href=\"//twitter.com/stackbuilders\">@stackbuilders</a> just launched their new website! <a target=\"_blank\" href=\"http://t.co/JUD5ALkotF\">stackbuilders.com</a> and it's built in haskell!", tweetId = "431929704388775936"}]
 ```
