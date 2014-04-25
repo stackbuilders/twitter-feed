@@ -25,8 +25,9 @@ import Data.Char (toLower)
 type BoundingIndices = [Int]
 
 data SimpleTweet = SimpleTweet
-    { body    :: String
-    , tweetId :: String
+    { body       :: String
+    , tweetId    :: String
+    , created_at :: String
     } deriving (Show, Generic)
 
 data Tweet =  Tweet
@@ -176,7 +177,9 @@ makeUserLink userEntity = Link x y mention
 
 simplifyTweet :: Tweet -> SimpleTweet
 simplifyTweet tweet =
-    SimpleTweet { body = text tweet, tweetId = idStr tweet }
+    SimpleTweet { body = text tweet
+                , tweetId = idStr tweet
+                , created_at = createdAt tweet }
 
 addLink :: Link -> String -> String
 addLink link tweet = before ++ newHtml link ++ after
