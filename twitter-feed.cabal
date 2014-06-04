@@ -19,7 +19,7 @@ source-repository head
 library
   exposed-modules:     Web.Twitter.Feed
   ghc-options:         -Wall
-  build-depends:         base >=4.6 && <4.8
+  build-depends:         base >=4.6 && <4.7
                        , authenticate-oauth
                        , aeson
                        , http-conduit
@@ -32,7 +32,7 @@ test-suite twitter-library
   hs-source-dirs: test, src
   main-is: Suite.hs
   build-depends:
-      base >=4.6 && <4.8
+      base >=4.6 && <4.7
       , test-framework >=0.8 && <0.9
       , HUnit
       , test-framework-hunit
