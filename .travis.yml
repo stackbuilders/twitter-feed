@@ -3,8 +3,11 @@ ghc:
   - 7.6
 
 script:
- - cabal configure --enable-tests -v2 --max-backjumps=-1
+ - cabal configure --enable-tests -v2
  - cabal build   # this builds all libraries and executables (including tests/benchmarks)
  - cabal test
  - cabal check
  - cabal sdist   # tests that a source-distribution can be generated
+
+install:
+  - cabal install --only-dependencies --enable-tests --max-backjumps=-1
