@@ -10,4 +10,5 @@ script:
  - cabal sdist   # tests that a source-distribution can be generated
 
 install:
+  - travis_retry cabal update
   - cabal install --only-dependencies --enable-tests --max-backjumps=-1

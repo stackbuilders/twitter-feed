@@ -19,7 +19,9 @@ source-repository head
 library
   exposed-modules:     Web.Twitter.Feed
   ghc-options:         -Wall
+
   build-depends:         base >=4.6 && <4.7
+
                        , authenticate-oauth
                        , aeson
                        , http-conduit
