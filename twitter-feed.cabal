@@ -1,5 +1,5 @@
 name:                twitter-feed
-version:             0.1.1.0
+version:             0.1.1.1
 synopsis:            Client for fetching Twitter timeline via Oauth
 description:         Fetches a user timeline from Twitter, and optionally linkifies the results using the Twitter entity API.
 homepage:            https://github.com/stackbuilders/twitter-feed
@@ -19,11 +19,10 @@ source-repository head
 library
   exposed-modules:     Web.Twitter.Feed
   ghc-options:         -Wall
-  build-depends:         base >=4.6 && <4.7
-                       , json
-                       , authenticate-oauth
-                       , aeson
-                       , http-conduit
+  build-depends:         base >=4.6 && <4.8
+                       , authenticate-oauth >=1.4
+                       , aeson >=0.7 && <0.8
+                       , http-conduit >=1.4 && <2.0
 
   hs-source-dirs:      src
   default-language:    Haskell2010
@@ -33,16 +32,14 @@ test-suite twitter-library
   hs-source-dirs: test, src
   main-is: Suite.hs
   build-depends:
-      base >=4.6 && <4.7
-      , test-framework
+      base >=4.6 && <4.8
+      , test-framework >=0.8 && <0.9
       , HUnit
       , test-framework-hunit
       , containers
 
-      -- Copied from the main build
-      , aeson
-      , json
-      , authenticate-oauth
-      , http-conduit
+      , authenticate-oauth >=1.4
+      , aeson >=0.7 && <0.8
+      , http-conduit >=1.4 && <2.0
 
   default-language:    Haskell2010
