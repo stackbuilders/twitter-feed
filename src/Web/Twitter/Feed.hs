@@ -2,6 +2,7 @@
 
 module Web.Twitter.Feed
   ( Tweet
+  , SimpleTweet (..)
   , Link (..)
   , URLEntity (..)
   , UserEntity (..)
