@@ -1,37 +1,39 @@
 module Web.Twitter.Feed.Tests where
 
 import Test.HUnit hiding (Test)
-import Data.Maybe (isJust)
 import Test.Framework.Providers.HUnit (testCase)
 import Test.Framework (Test, testGroup)
 
 import Web.Twitter.Feed
-  ( Link (..)
-  , URLEntity (..)
-  , UserEntity (..)
-  , MediaEntity (..)
-  , timelineUrl
-  , addLink
-  , sortLinks
-  )
+import Web.Twitter.Types
 
-addLinkTest =
-    addLink (Link 8 8 "not ") "this is a test" @?= "this is not a test"
+addLinkTest :: Assertion
+addLinkTest = addLink (Link 8 8 "not ") "this is a test" @?= "this is not a test"
 
-timelineUrlTest =
-    timelineUrl "someone" 3 True @?=
-                    "https://api.twitter.com/1.1/statuses/user_timeline.json\
-                    \?screen_name=someone&count=3&exclude_replies=true"
+addLinkEllipsisTest :: Assertion
+addLinkEllipsisTest = addLink (Link 139 140 "link") tweet @?= expected
+  where
+    tweet    = replicate 130 'a' ++ " http://ww"
+    expected = replicate 130 'a' ++ " link"
 
+timelineUrlTest :: Assertion
+timelineUrlTest = timelineUrl "someone" 3 True @?= expected
+  where
+    expected = concat [ "https://api.twitter.com/1.1/statuses/user_timeline.json"
+                      , "?screen_name=someone&count=3&exclude_replies=true"
+                      ]
+
+sortLinkTest :: Assertion
 sortLinkTest =
-    sortLinks urlEntitiesExamples userEntitiesExamples mediaEntitiesExamples
+  sortLinks urlEntitiesExamples userEntitiesExamples mediaEntitiesExamples
       @?= sortedLinks
 
 tests :: Test
 tests = testGroup "Web.Twitter.Feed"
-          [ testCase "addLink"     addLinkTest
-          , testCase "timelineUrl" timelineUrlTest
-          , testCase "sortLinks"   sortLinkTest
+          [ testCase "addLink"         addLinkTest
+          , testCase "addLinkEllipsis" addLinkEllipsisTest
+          , testCase "timelineUrl"     timelineUrlTest
+          , testCase "sortLinks"       sortLinkTest
           ]
 
 sortedLinks :: [Link]
@@ -48,17 +50,16 @@ sortedLinks =
 
 urlEntitiesExamples :: [URLEntity]
 urlEntitiesExamples =
-  [ URLEntity "google.com"        [2, 12]  "t.co/g"
-  , URLEntity "stackbuilders.com" [20, 39] "t.co/s"
+  [ URLEntity "google.com"        (2, 12)  "t.co/g"
+  , URLEntity "stackbuilders.com" (20, 39) "t.co/s"
   ]
 
 userEntitiesExamples :: [UserEntity]
 userEntitiesExamples =
-  [ UserEntity "Hackage"       [13, 20]
-  , UserEntity "StackBuilders" [50, 62]
+  [ UserEntity "Hackage"       (13, 20)
+  , UserEntity "StackBuilders" (50, 62)
   ]
 
 mediaEntitiesExamples :: [MediaEntity]
 mediaEntitiesExamples =
-  [ MediaEntity "http://t.co/xhzEs8NuQa" [70, 92] "pic.twitter.com/xhzEs8NuQa"
-  ]
+  [ MediaEntity "http://t.co/xhzEs8NuQa" (70, 92) "pic.twitter.com/xhzEs8NuQa" ]
