@@ -1,5 +1,15 @@
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
+-----------------------------------------------------------------------------
+-- |
+-- Module      : Web.Twitter.Feed
+-- License     : MIT (see the file LICENSE)
+-- Maintainer  : Justin Leitgeb <justin@stackbuilders.com>
+--
+-- Functions for fetching (and linkifying) timelines of Twitter users.
+--
+-----------------------------------------------------------------------------
+
 module Web.Twitter.Feed
   ( timeline
   , addLink
@@ -16,8 +26,14 @@ import Data.List (elemIndices, sort)
 import Data.Char (toLower)
 import Web.Twitter.Types
 
-timeline :: OAuth -> Credential -> Int -> Bool -> String ->
-            IO (Either String [SimpleTweet])
+-- | Get and decode a user timeline.
+timeline :: OAuth                            -- ^ OAuth client (consumer)
+         -> Credential                       -- ^ OAuth credential
+         -> Int                              -- ^ Count
+         -> Bool                             -- ^ Exclude replies?
+         -> String                           -- ^ Screen name
+         -> IO (Either String [SimpleTweet]) -- ^ Either an error or
+                                             --   the list of tweets
 timeline oauth credential count excludeReplies username = do
   req <- createRequest username count excludeReplies
   res <- getResponse oauth credential req
@@ -38,7 +54,11 @@ getResponse oauth credential req =
 decodeTweets :: Response BS.ByteString -> Either String [Tweet]
 decodeTweets = eitherDecode . responseBody
 
-timelineUrl :: String -> Int -> Bool -> String
+-- | Returns the URL for requesting a user timeline.
+timelineUrl :: String -- ^ Screen name
+            -> Int    -- ^ Count
+            -> Bool   -- ^ Exclude replies?
+            -> String -- ^ The URL for requesting the user timeline
 timelineUrl user count excludeReplies =
     "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" ++
     user ++ "&count=" ++ show count ++ "&exclude_replies=" ++
@@ -57,7 +77,11 @@ processText :: String -> [UserEntity] -> [URLEntity] -> [MediaEntity] -> String
 processText message users urls medias = foldr addLink message sortedLinks
   where sortedLinks = sortLinks urls users medias
 
-sortLinks :: [URLEntity] -> [UserEntity] -> [MediaEntity] -> [Link]
+-- | Sort lists of URL, user mention, and media entities.
+sortLinks :: [URLEntity]   -- ^ A list of URL entities
+          -> [UserEntity]  -- ^ A list of user mention entities
+          -> [MediaEntity] -- ^ A list of media entities
+          -> [Link]        -- ^ The sorted list of links
 sortLinks urls users medias = sort (map makeURLLink   urls ++
                                     map makeUserLink  users ++
                                     map makeMediaLink medias)
@@ -91,7 +115,10 @@ simplifyTweet tweet =
                 , tweetId = idStr tweet
                 , created_at = createdAt tweet }
 
-addLink :: Link -> String -> String
+-- | Add a link to the text of a tweet.
+addLink :: Link   -- ^ A link
+        -> String -- ^ The text of a tweet without the link
+        -> String -- ^ The text of the tweet with the link
 addLink (Link 139 140 link) tweet = before ++ " " ++ link ++ after
   where before = fst (splitAt (lastBlank tweet) tweet)
         after  = snd (splitAt 140 tweet)
