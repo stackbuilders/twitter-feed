@@ -1,6 +1,6 @@
-# Twitter Feed
+[![Build Status](https://travis-ci.org/stackbuilders/twitter-feed.svg?branch=master)](https://travis-ci.org/stackbuilders/twitter-feed) [![Hackage](https://img.shields.io/hackage/v/twitter-feed.svg)](http://hackage.haskell.org/package/twitter-feed)
 
-[![Build Status](https://travis-ci.org/stackbuilders/twitter-feed.svg?branch=master)](https://travis-ci.org/stackbuilders/twitter-feed)
+# Twitter Feed
 
 This package is used for retrieving a users' timeline via the Twitter timeline
 API (OAuth). It retrieves the timeline with entities, and links the usernames
