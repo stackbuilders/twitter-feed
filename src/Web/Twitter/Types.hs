@@ -19,7 +19,7 @@ module Web.Twitter.Types
   , MediaEntity(..)
   ) where
 
-import Control.Applicative
+import Control.Applicative ((<*>), (<$>))
 import Data.Aeson
 import Data.Aeson.Types
 import Data.Ord (comparing)
