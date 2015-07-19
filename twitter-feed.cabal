@@ -45,3 +45,5 @@ test-suite twitter-library
 
   default-language:    Haskell2010
   ghc-options:         -Wall
+  other-modules:
+    Web.Twitter.Feed.Tests
