@@ -1,5 +1,5 @@
 name:                twitter-feed
-version:             0.2.0.3
+version:             0.2.0.4
 synopsis:            Client for fetching Twitter timeline via Oauth
 description:         Fetches a user timeline from Twitter, and optionally linkifies the results using the Twitter entity API.
 homepage:            https://github.com/stackbuilders/twitter-feed
