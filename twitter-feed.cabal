@@ -22,7 +22,7 @@ library
   ghc-options:         -Wall
 
   build-depends:
-    base               >= 4.6   && < 4.9,
+    base               >= 4.6   && < 4.10,
     aeson              >= 0.8   && < 0.12,
     authenticate-oauth >= 1.5   && < 1.6,
     http-conduit       >= 2.1.4 && < 2.2.0,
