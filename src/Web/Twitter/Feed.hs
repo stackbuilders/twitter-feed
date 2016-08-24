@@ -20,6 +20,7 @@ module Web.Twitter.Feed
 import qualified Data.ByteString.Lazy as BS
 
 import Network.HTTP.Conduit
+import Network.HTTP.Client.Conduit (defaultManagerSettings)
 import Web.Authenticate.OAuth
 import Data.Aeson
 import Data.List (elemIndices, sort)
@@ -43,22 +44,21 @@ timeline oauth credential count excludeReplies username = do
       Right ts     -> Right $ map (simplifyTweet . linkifyTweet) ts
 
 createRequest :: String -> Int -> Bool -> IO Request
-#if MIN_VERSION_http_conduit(2,1,11)
 createRequest username count excludeReplies = parseUrlThrow $ timelineUrl username count excludeReplies
-#else
-createRequest username count excludeReplies = parseUrl $ timelineUrl username count excludeReplies
+#if (!MIN_VERSION_http_conduit(2,1,11))
+  where
+    parseUrlThrow = parseUrl
 #endif
 
 getResponse :: OAuth -> Credential -> Request -> IO (Response BS.ByteString)
-getResponse oauth credential req =
-#if MIN_VERSION_http_conduit(2,1,11)
-  do
+getResponse oauth credential req = do
   m <- newManager tlsManagerSettings
-#else
-  withManager $ \m -> do
-#endif
   signedreq <- signOAuth oauth credential req
   httpLbs signedreq m
+#if (!MIN_VERSION_http_conduit(2,1,11))
+    where
+      tlsManagerSettings = defaultManagerSettings
+#endif
 
 decodeTweets :: Response BS.ByteString -> Either String [Tweet]
 decodeTweets = eitherDecode . responseBody
