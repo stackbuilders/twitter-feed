@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 -----------------------------------------------------------------------------
 -- |
@@ -43,13 +43,13 @@ timeline oauth credential count excludeReplies username = do
       Right ts     -> Right $ map (simplifyTweet . linkifyTweet) ts
 
 createRequest :: String -> Int -> Bool -> IO Request
-createRequest username count excludeReplies = parseUrl $ timelineUrl username count excludeReplies
+createRequest username count excludeReplies = parseUrlThrow $ timelineUrl username count excludeReplies
 
 getResponse :: OAuth -> Credential -> Request -> IO (Response BS.ByteString)
-getResponse oauth credential req =
-  withManager $ \m -> do
-    signedreq <- signOAuth oauth credential req
-    httpLbs signedreq m
+getResponse oauth credential req = do
+  m <- newManager tlsManagerSettings
+  signedreq <- signOAuth oauth credential req
+  httpLbs signedreq m
 
 decodeTweets :: Response BS.ByteString -> Either String [Tweet]
 decodeTweets = eitherDecode . responseBody
@@ -62,7 +62,7 @@ timelineUrl :: String -- ^ Screen name
 timelineUrl user count excludeReplies =
     "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" ++
     user ++ "&count=" ++ show count ++ "&exclude_replies=" ++
-    (map toLower $ show excludeReplies)
+    map toLower (show excludeReplies)
 
 linkifyTweet :: Tweet -> Tweet
 linkifyTweet tweet = Tweet (processText (text tweet)

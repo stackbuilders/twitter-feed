@@ -19,9 +19,8 @@ addLinkEllipsisTest = addLink (Link 139 140 "link") tweet @?= expected
 timelineUrlTest :: Assertion
 timelineUrlTest = timelineUrl "someone" 3 True @?= expected
   where
-    expected = concat [ "https://api.twitter.com/1.1/statuses/user_timeline.json"
-                      , "?screen_name=someone&count=3&exclude_replies=true"
-                      ]
+    expected = "https://api.twitter.com/1.1/statuses/user_timeline.json" ++
+               "?screen_name=someone&count=3&exclude_replies=true"
 
 sortLinkTest :: Assertion
 sortLinkTest =
