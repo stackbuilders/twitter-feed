@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, CPP #-}
 
 -----------------------------------------------------------------------------
 -- |
@@ -43,11 +43,20 @@ timeline oauth credential count excludeReplies username = do
       Right ts     -> Right $ map (simplifyTweet . linkifyTweet) ts
 
 createRequest :: String -> Int -> Bool -> IO Request
+#if MIN_VERSION_http_conduit(2,1,11)
 createRequest username count excludeReplies = parseUrlThrow $ timelineUrl username count excludeReplies
+#else
+createRequest username count excludeReplies = parseUrl $ timelineUrl username count excludeReplies
+#endif
 
 getResponse :: OAuth -> Credential -> Request -> IO (Response BS.ByteString)
-getResponse oauth credential req = do
+getResponse oauth credential req =
+#if MIN_VERSION_http_conduit(2,1,11)
+  do
   m <- newManager tlsManagerSettings
+#else
+  withManager $ \m -> do
+#endif
   signedreq <- signOAuth oauth credential req
   httpLbs signedreq m
 
