@@ -20,7 +20,7 @@ module Web.Twitter.Feed
 import qualified Data.ByteString.Lazy as BS
 
 import Network.HTTP.Conduit
-import Network.HTTP.Client.Conduit (defaultManagerSettings)
+import Network.HTTP.Client.TLS (tlsManagerSettings)
 import Web.Authenticate.OAuth
 import Data.Aeson
 import Data.List (elemIndices, sort)
@@ -55,10 +55,6 @@ getResponse oauth credential req = do
   m <- newManager tlsManagerSettings
   signedreq <- signOAuth oauth credential req
   httpLbs signedreq m
-#if (!MIN_VERSION_http_conduit(2,1,11))
-    where
-      tlsManagerSettings = defaultManagerSettings
-#endif
 
 decodeTweets :: Response BS.ByteString -> Either String [Tweet]
 decodeTweets = eitherDecode . responseBody
