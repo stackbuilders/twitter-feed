@@ -20,7 +20,7 @@ module Web.Twitter.Feed
 import qualified Data.ByteString.Lazy as BS
 
 import Network.HTTP.Conduit
-import Network.HTTP.Client.TLS (tlsManagerSettings)
+import Network.HTTP.Client.Conduit (defaultManagerSettings)
 import Web.Authenticate.OAuth
 import Data.Aeson
 import Data.List (elemIndices, sort)
@@ -52,7 +52,7 @@ createRequest username count excludeReplies = parseUrlThrow $ timelineUrl userna
 
 getResponse :: OAuth -> Credential -> Request -> IO (Response BS.ByteString)
 getResponse oauth credential req = do
-  m <- newManager tlsManagerSettings
+  m <- newManager defaultManagerSettings
   signedreq <- signOAuth oauth credential req
   httpLbs signedreq m
 
