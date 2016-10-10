@@ -1,3 +1,7 @@
+## 0.2.0.10
+
+- Allow HUnit 1.4.
+
 ## 0.2.0.9
 
 - Allow http-conduit 2.2.
