@@ -15,17 +15,18 @@ You must pass your OAuth credentials to the client. Create them as follows:
 
 ```haskell
 import Web.Authenticate.OAuth
+import Data.ByteString.Char8
 
 myoauth :: OAuth
 myoauth = newOAuth
     { oauthServerName     = "api.twitter.com"
-    , oauthConsumerKey    = "your consumer key"
-    , oauthConsumerSecret = "your consumer secret"
+    , oauthConsumerKey    = pack "your consumer key"
+    , oauthConsumerSecret = pack "your consumer secret"
     }
 
 mycred :: Credential
-mycred = newCredential "your oauth token"
-                       "your oauth token secret"
+mycred = newCredential (pack "your oauth token")
+                       (pack "your oauth token secret")
 ```
 
 Next, you can call the `timeline` function directly. The arguments to the
