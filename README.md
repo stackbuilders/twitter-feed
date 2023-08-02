@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.org/stackbuilders/twitter-feed.svg?branch=master)](https://travis-ci.org/stackbuilders/twitter-feed) [![Hackage](https://img.shields.io/hackage/v/twitter-feed.svg)](http://hackage.haskell.org/package/twitter-feed)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
-# Twitter Feed
+> **⚠️ Warning:** This library has been deprecated and is no longer maintained. It will not receive any further security patches, features, or bug fixes and is preserved here at GitHub for archival purposes. If you want to use it, we suggest forking the repository and auditing the codebase before use. For more information, contact us at info@stackbuilders.com.
+
+# DEPRECATED - Twitter Feed
 
 This package is used for retrieving a users' timeline via the Twitter timeline
 API (OAuth). It retrieves the timeline with entities, and links the usernames
@@ -52,10 +55,14 @@ pass, and open a PR.
 
 ## LICENSE
 
-MIT, see the LICENSE file in this repo.
+MIT, see [the LICENSE file](LICENSE).
 
 ## Authors
 
 Justin Leitgeb (Twitter: [@justinleitgeb](http://twitter.com/justinleitgeb),
 Github: [@jsl](https://github.com/jsl)) and
 Andrés Torres (Github: [AndresRicardoTorres](https://github.com/AndresRicardoTorres)).
+
+---
+<img src="https://cdn.stackbuilders.com/media/images/Sb-supports.original.png" alt="Stack Builders" width="50%"></img>  
+[Check out our libraries](https://github.com/stackbuilders/) | [Join our team](https://www.stackbuilders.com/join-us/)
